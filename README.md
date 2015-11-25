@@ -15,9 +15,9 @@
 项目shell目录下的rdsbackupstart，可以通过docker将下载的物理备份文件启动成mysql实例
 不过需要先将shell路径下的rds_backup_extract加入PATH，并且安装
 [Percona-XtraBackup](http://www.percona.com/downloads/XtraBackup/ 'Percona-XtraBackup')
-'''bash
+<!--lang:bash-->
 cd /data/rdsbackup/
 rdsbackupstart  hins.tar.gz 33060 rds7h9
-'''
+
 
 即可通过33060端口访问数据库（没有权限验证），初次启动，因为需要去dockerhub下载docker镜像，所以会比较慢
