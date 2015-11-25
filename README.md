@@ -5,11 +5,10 @@
 通过阿里云提供的rds api，下载阿里云rds一天内物理备份的文件
 可以配置如下crontab来实现自动下载
 
-{% codeblock [title] [lang:bash] [url] [link text] %}
+<!--lang:bash-->
     git clone git@github.com:francisar/rds_manager.git
     crontab -e
     * 5 * * * * cd [project path] && ./getDBback.sh > /dev/null 2>&1
-{% endcodeblock %}
 
 
 ## 将备份启动
@@ -19,5 +18,6 @@
 '''bash
 cd /data/rdsbackup/
 rdsbackupstart  hins.tar.gz 33060 rds7h9
+'''
 
 即可通过33060端口访问数据库（没有权限验证），初次启动，因为需要去dockerhub下载docker镜像，所以会比较慢
