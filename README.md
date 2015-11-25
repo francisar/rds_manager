@@ -3,7 +3,6 @@
 
 
 ## 配置说明
-
 在config.py中设置
 <!--lang:python-->
     ACCESSKEYID = ''
@@ -11,6 +10,7 @@
 在getDBbackupurl.py中设置
 <!--lang:python-->
     DBInstanceID=''
+文件备份路径为/data/rdsbackup/ 需要预先创建目录
 ## 定时自动获取备份
 通过阿里云提供的rds api，下载阿里云rds一天内物理备份的文件
 可以配置如下crontab来实现自动下载
