@@ -5,10 +5,12 @@
 通过阿里云提供的rds api，下载阿里云rds一天内物理备份的文件
 可以配置如下crontab来实现自动下载
 
-'''bash
-git clone git@github.com:francisar/rds_manager.git
-crontab -e
-* 5 * * * * cd [project path] && ./getDBback.sh > /dev/null 2>&1
+{% codeblock [title] [lang:bash] [url] [link text] %}
+    git clone git@github.com:francisar/rds_manager.git
+    crontab -e
+    * 5 * * * * cd [project path] && ./getDBback.sh > /dev/null 2>&1
+{% endcodeblock %}
+
 
 ## 将备份启动
 项目shell目录下的rdsbackupstart，可以通过docker将下载的物理备份文件启动成mysql实例
