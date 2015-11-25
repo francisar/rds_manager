@@ -1,0 +1,65 @@
+#!/bin/bash
+
+
+
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/sbin/tools
+NETIP=`ifconfig eth0|grep "inet "|awk -F " " '{print $2}'`
+DEST_ROOT=/data/mysqlbackup/
+CUR_DIR=$(dirname $0)
+PORT=33060
+RDSINSTANCE=
+usage()
+{
+        echo "USAGE: $0 {source file} {port} [rdsinstance] [destination path]" 
+        echo " e.g.: $0 hins.tar.gz 33060 rds7h9" 
+}
+
+
+extract_file()
+{
+	[ -d "$DEST_PATH" ] || mkdir -p $DEST_PATH
+	rds_backup_extract -f $SOURCEFILE -C $DEST_PATH
+}
+
+backup_restore()
+{
+	innobackupex --defaults-file=$DEST_PATH"backup-my.cnf" --apply-log $DEST_PATH
+}
+
+
+mysqlinstance_start()
+{
+	docker run -d -p $PORT:3306  --name=$SOURCEFILENAME -v $DEST_PATH:/data/mysql/ francisar/mysql:mysql5.6 
+}
+
+accessinfo_print()
+{
+	echo $NETIP":"$PORT
+}	
+
+
+if [ $# -lt 2 ] ; then 
+        usage
+        exit 1; 
+fi
+if [ -f $1 ];then
+	SOURCEFILE=$1
+	SOURCEFILENAME=${SOURCEFILE##*/}
+	SOURCEFILENAME=${SOURCEFILENAME%.*}
+	SOURCEFILENAME=${SOURCEFILENAME%.*}
+else
+	echo $1" file not found"
+	exit 1;
+fi
+PORT=$2
+[ -n "$3" ] && RDSINSTANCE=$3
+DEST_PATH=$DEST_ROOT$RDSINSTANCE"/"$SOURCEFILENAME'/'
+[ -n "$4" ] && DEST_PATH=$4
+
+
+extract_file
+
+backup_restore
+
+mysqlinstance_start
+accessinfo_print
