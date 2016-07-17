@@ -8,4 +8,4 @@ else
 fi
 export PWD=$CUR_DIR
 export LANG=en_US.UTF-8
-/usr/bin/python getDBbackupurl.py 
+/usr/bin/python $CUR_DIR/getDBbackupurl.py 
