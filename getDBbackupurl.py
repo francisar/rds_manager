@@ -9,7 +9,7 @@ DBInstanceID=''
 BackUpPath='/data/rdsbackup/'+DBInstanceID+'/'
 if os.path.exists(BackUpPath):
 	if os.path.isdir(BackUpPath) is not True:
-		print "error:"BackUpPath+" is a file"
+		print "error:"+BackUpPath+" is a file"
 		sys.exit(1)
 else:
 	os.makedirs(BackUpPath)
